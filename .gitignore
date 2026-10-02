@@ -1,0 +1,11 @@
+# Mengabaikan file environment variable (Kredensial)
+.env
+
+# Mengabaikan database SQLite agar data absen/user tidak tersebar
+*.db
+database_absensi.db
+database_testing.db
+
+# Mengabaikan cache python
+__pycache__/
+*.py[cod]
