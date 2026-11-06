@@ -83,7 +83,7 @@ start index.html
 
 | Env | Nilai contoh |
 |---|---|
-| `PUBLIC_DATA_URL` | `https://raw.githubusercontent.com/TestwayWeb3/absensi-dashboard/main/absensi_data.json` |
+|| `PUBLIC_DATA_URL` | `https://raw.githubusercontent.com/TestwayWeb3/bot-absensi/main/absensi_data.json` |
 | `DATA_URL` | (sama seperti atas) — script membacanya dari `PUBLIC_DATA_URL` |
 
 > 💡 Ganti `DATA_URL` di dalam `index.html` jika tidak ingin pakai env.
