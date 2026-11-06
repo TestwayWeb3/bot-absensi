@@ -1,0 +1,237 @@
+{
+  "updated_at": "auto-export-database_testing",
+  "db": "database_testing.db",
+  "entries": [
+    {
+      "id": 9,
+      "user_id": 7955374992,
+      "nama": "anjsa",
+      "divisi": "admin gudang",
+      "shift": "07:30-17:00",
+      "tanggal": "2026-10-03",
+      "status": "Lembur Libur",
+      "waktu_masuk": null,
+      "waktu_pulang": "2026-10-03 05:18:12"
+    },
+    {
+      "id": 38,
+      "user_id": 1210522333,
+      "nama": "aris",
+      "divisi": "developer",
+      "shift": "07:30-17:00",
+      "tanggal": "2026-11-05",
+      "status": "Hadir",
+      "waktu_masuk": "2026-11-05 06:59:44",
+      "waktu_pulang": "2026-11-05 20:17:04"
+    },
+    {
+      "id": 37,
+      "user_id": 1210522333,
+      "nama": "aris",
+      "divisi": "developer",
+      "shift": "07:30-17:00",
+      "tanggal": "2026-11-04",
+      "status": "Hadir",
+      "waktu_masuk": "2026-11-04 09:10:22",
+      "waktu_pulang": null
+    },
+    {
+      "id": 36,
+      "user_id": 1210522333,
+      "nama": "aris",
+      "divisi": "developer",
+      "shift": "07:30-17:00",
+      "tanggal": "2026-10-23",
+      "status": "Hadir",
+      "waktu_masuk": "2026-10-23 07:21:16",
+      "waktu_pulang": "2026-10-23 21:26:03"
+    },
+    {
+      "id": 35,
+      "user_id": 1210522333,
+      "nama": "aris",
+      "divisi": "developer",
+      "shift": "07:30-17:00",
+      "tanggal": "2026-10-22",
+      "status": "Hadir",
+      "waktu_masuk": "2026-10-22 07:20:44",
+      "waktu_pulang": "2026-10-22 16:51:40"
+    },
+    {
+      "id": 34,
+      "user_id": 1210522333,
+      "nama": "aris",
+      "divisi": "developer",
+      "shift": "07:30-17:00",
+      "tanggal": "2026-10-21",
+      "status": "Hadir",
+      "waktu_masuk": "2026-10-21 07:20:28",
+      "waktu_pulang": "2026-10-21 12:38:01"
+    },
+    {
+      "id": 33,
+      "user_id": 1210522333,
+      "nama": "aris",
+      "divisi": "developer",
+      "shift": "07:30-17:00",
+      "tanggal": "2026-10-20",
+      "status": "Sakit",
+      "waktu_masuk": null,
+      "waktu_pulang": null
+    },
+    {
+      "id": 32,
+      "user_id": 1210522333,
+      "nama": "aris",
+      "divisi": "developer",
+      "shift": "07:30-17:00",
+      "tanggal": "2026-10-19",
+      "status": "Hadir",
+      "waktu_masuk": "2026-10-19 21:02:38",
+      "waktu_pulang": "2026-10-19 21:02:41"
+    },
+    {
+      "id": 30,
+      "user_id": 1210522333,
+      "nama": "aris",
+      "divisi": "developer",
+      "shift": "07:30-17:00",
+      "tanggal": "2026-10-18",
+      "status": "Hadir",
+      "waktu_masuk": "2026-10-18 14:54:10",
+      "waktu_pulang": "2026-10-18 17:00:53"
+    },
+    {
+      "id": 29,
+      "user_id": 1210522333,
+      "nama": "aris",
+      "divisi": "developer",
+      "shift": "07:30-17:00",
+      "tanggal": "2026-10-17",
+      "status": "Hadir",
+      "waktu_masuk": "2026-10-17 07:24:30",
+      "waktu_pulang": "2026-10-17 16:40:11"
+    },
+    {
+      "id": 28,
+      "user_id": 1210522333,
+      "nama": "aris",
+      "divisi": "developer",
+      "shift": "07:30-17:00",
+      "tanggal": "2026-10-16",
+      "status": "Hadir",
+      "waktu_masuk": "2026-10-16 07:24:40",
+      "waktu_pulang": "2026-10-16 18:51:50"
+    },
+    {
+      "id": 27,
+      "user_id": 1210522333,
+      "nama": "aris",
+      "divisi": "developer",
+      "shift": "07:30-17:00",
+      "tanggal": "2026-10-15",
+      "status": "Hadir",
+      "waktu_masuk": "2026-10-15 07:26:32",
+      "waktu_pulang": "2026-10-15 19:47:39"
+    },
+    {
+      "id": 26,
+      "user_id": 1210522333,
+      "nama": "aris",
+      "divisi": "developer",
+      "shift": "07:30-17:00",
+      "tanggal": "2026-10-14",
+      "status": "Hadir",
+      "waktu_masuk": "2026-10-14 07:25:17",
+      "waktu_pulang": "2026-10-14 20:31:45"
+    },
+    {
+      "id": 25,
+      "user_id": 1210522333,
+      "nama": "aris",
+      "divisi": "developer",
+      "shift": "07:30-17:00",
+      "tanggal": "2026-10-13",
+      "status": "Hadir",
+      "waktu_masuk": "2026-10-13 07:26:31",
+      "waktu_pulang": "2026-10-13 16:48:54"
+    },
+    {
+      "id": 24,
+      "user_id": 1210522333,
+      "nama": "aris",
+      "divisi": "developer",
+      "shift": "07:30-17:00",
+      "tanggal": "2026-10-12",
+      "status": "Hadir",
+      "waktu_masuk": "2026-10-12 07:24:10",
+      "waktu_pulang": "2026-10-12 16:58:52"
+    },
+    {
+      "id": 23,
+      "user_id": 1210522333,
+      "nama": "aris",
+      "divisi": "developer",
+      "shift": "07:30-17:00",
+      "tanggal": "2026-10-10",
+      "status": "Hadir",
+      "waktu_masuk": "2026-10-10 07:35:22",
+      "waktu_pulang": null
+    },
+    {
+      "id": 22,
+      "user_id": 1210522333,
+      "nama": "aris",
+      "divisi": "developer",
+      "shift": "07:30-17:00",
+      "tanggal": "2026-10-09",
+      "status": "Hadir",
+      "waktu_masuk": "2026-10-09 07:29:02",
+      "waktu_pulang": "2026-10-09 21:41:26"
+    },
+    {
+      "id": 21,
+      "user_id": 1210522333,
+      "nama": "aris",
+      "divisi": "developer",
+      "shift": "07:30-17:00",
+      "tanggal": "2026-10-08",
+      "status": "Hadir",
+      "waktu_masuk": "2026-10-08 07:24:25",
+      "waktu_pulang": "2026-10-08 20:12:39"
+    },
+    {
+      "id": 20,
+      "user_id": 1210522333,
+      "nama": "aris",
+      "divisi": "developer",
+      "shift": "07:30-17:00",
+      "tanggal": "2026-10-07",
+      "status": "Hadir",
+      "waktu_masuk": "2026-10-07 07:21:37",
+      "waktu_pulang": "2026-10-07 16:46:40"
+    },
+    {
+      "id": 19,
+      "user_id": 1210522333,
+      "nama": "aris",
+      "divisi": "developer",
+      "shift": "07:30-17:00",
+      "tanggal": "2026-10-06",
+      "status": "Hadir",
+      "waktu_masuk": "2026-10-06 21:44:00",
+      "waktu_pulang": "2026-10-06 21:44:03"
+    },
+    {
+      "id": 18,
+      "user_id": 1210522333,
+      "nama": "aris",
+      "divisi": "developer",
+      "shift": "07:30-17:00",
+      "tanggal": "2026-10-03",
+      "status": "Izin",
+      "waktu_masuk": null,
+      "waktu_pulang": null
+    }
+  ]
+}

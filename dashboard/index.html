@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard Absensi Bot</title>
+<style>
+  :root{
+    --bg:#0f171c; --panel:#15212a; --panel2:#1b2833;
+    --line:#2b3a44; --line2:#364855;
+    --ink:#e8eef3; --muted:#93a5b1;
+    --accent:#79e0d1; --accent2:#f2bd76;
+    --ok:#7fd8a8; --warn:#f2a676; --err:#ff7a7a;
+    --pill:#24333c;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:"Aptos","Segoe UI",-apple-system,system-ui,sans-serif;
+    line-height:1.5; min-height:100vh;
+  }
+  .wrap{max-width:1060px;margin:0 auto;padding:20px 16px 60px}
+
+  header.topbar{
+    display:flex; align-items:center; gap:14px;
+    flex-wrap:wrap; padding:14px 16px;
+    background:var(--panel); border:1px solid var(--line);
+    border-radius:12px;
+  }
+  .brand{display:flex; align-items:center; gap:10px; font-weight:700; color:var(--accent)}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--ok);display:inline-block}
+  .sub{color:var(--muted);font-size:13px;flex:1}
+  .badge{
+    font-size:11px; padding:3px 8px; border-radius:999px;
+    background:var(--panel2); color:var(--muted); border:1px solid var(--line2);
+  }
+  .badge.live{color:var(--ok);border-color:#2f523a;background:#13241c}
+
+  .cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-top:14px}
+  .card{
+    background:var(--panel); border:1px solid var(--line);
+    border-radius:10px; padding:12px 14px;
+  }
+  .card .lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+  .card .val{font-size:24px;font-weight:700;color:var(--ink);margin-top:4px; font-variant-numeric:tabular-nums}
+  .card .val.ok{color:var(--ok)} .card .val.warn{color:var(--warn)} .card .val.err{color:var(--err)} .card .val.neutral{color:var(--muted)}
+  .card .sub2{font-size:12px;color:var(--muted);margin-top:2px}
+
+  .main{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:14px}
+  @media (max-width:760px){ .main{grid-template-columns:1fr} }
+
+  .panel{
+    background:var(--panel); border:1px solid var(--line);
+    border-radius:10px; padding:14px;
+  }
+  .panel h3{margin:0 0 10px; font-size:14px}
+  .meta{font-size:12px;color:var(--muted);margin-bottom:10px}
+
+  .toolbar{display:flex; gap:8px; flex-wrap:wrap; align-items:center}
+  .toolbar select, .toolbar button{
+    background:var(--panel2); color:var(--ink);
+    border:1px solid var(--line2); border-radius:7px; padding:7px 10px; font-size:13px; cursor:pointer;
+  }
+  .toolbar select{flex:0 1 160px}
+  .toolbar button.primary{background:var(--accent);border-color:var(--accent);color:#06221b;font-weight:700}
+
+  table{width:100%; border-collapse:collapse; font-size:13px}
+  th,td{border-bottom:1px solid var(--line2); padding:8px 8px; text-align:left; vertical-align:top}
+  th{background:var(--panel2); color:var(--muted);font-weight:600; font-size:11px; text-transform:uppercase; letter-spacing:.04em}
+  tr:last-child td{border-bottom:0}
+  .tag{
+    display:inline-block; padding:2px 7px; border-radius:999px; font-size:11px; font-weight:700;
+    background:var(--panel2); color:var(--muted); border:1px solid var(--line2);
+  }
+  .tag.hadir{color:var(--ok);border-color:#2f523a;background:#13241c}
+  .tag.sakit{color:var(--warn),border-color:#5a2f2f;background:#2a1b16}
+  .tag.izin{color:#c9a2ff;border-color:#4a3a6a;background:#241828}
+  .tag.lembur{color:var(--accent);border-color:#3d7a66;background:#132420}
+  .tag.lemburlibur{color:#c9a2ff;border-color:#4a3a6a;background:#241828}
+
+  .empty{
+    text-align:center; color:var(--muted); padding:26px 10px;
+    font-size:14px; border:1px dashed var(--line2); border-radius:10px;
+  }
+  .empty .big{font-size:30px;display:block;margin-bottom:6px}
+
+  .foot{margin-top:12px; font-size:12px; color:var(--muted); display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap}
+  .errbox{display:none; background:#2a1616; color:#ffb3b3; border:1px solid #5a2f2f; border-radius:8px; padding:10px 12px; font-size:13px; margin-top:10px}
+  .errbox.show{display:block}
+
+  @media (prefers-color-scheme:dark){
+    :root{--bg:#0b1014;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="topbar">
+    <span class="brand"><span class="dot"></span>📋 Dashboard Absensi Bot</span>
+    <span class="sub">Tampilan publik — baca saja, tidak mengubah data</span>
+    <span class="badge live" id="freshBadge">◌ Menunggu data</span>
+  </header>
+
+  <section class="cards" id="summary">
+    <div class="card"><div class="lbl">Hadir</div><div class="val ok" id="s_hadir">—</div></div>
+    <div class="card"><div class="lbl">Sakit &amp; Izin</div><div class="val err" id="s_sakit">—</div></div>
+    <div class="card"><div class="lbl">Lembur</div><div class="val warn" id="s_lembur">—</div></div>
+    <div class="card"><div class="lbl">Data terakhir</div><div class="val neutral" id="s_tgl">—</div></div>
+  </section>
+
+  <section class="main">
+    <div class="panel">
+      <h3>📊 Riwayat (terbaru)</h3>
+      <div class="meta" id="tableMeta">Tambahkan <code>DATA_URL</code> untuk menampilkan data.</div>
+      <div class="toolbar">
+        <select id="fStatus">
+          <option value="all">Semua status</option>
+          <option value="Hadir">Hadir</option>
+          <option value="Sakit">Sakit</option>
+          <option value="Izin">Izin</option>
+          <option value="Lembur">Lembur</option>
+          <option value="Lembur Libur">Lembur Libur</option>
+        </select>
+        <button id="btnRefresh" class="primary">⟳ Refresh</button>
+        <button id="btnToggle">📋 Rinci → Ringkas</button>
+      </div>
+      <div id="tableWrap" style="overflow:auto;max-height:320px;">
+        <table>
+          <thead><tr>
+            <th>Tanggal</th><th>Nama</th><th>Divisi</th><th>Shift</th><th>Status</th><th>Jam masuk</th><th>Jam pulang</th>
+          </tr></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+      <div class="empty" id="empty"><span class="big">📭</span><br>Belum ada data.<br>Pastikan <code>DATA_URL</code> menunjuk ke file JSON yang bisa diakses publik.</div>
+      <div class="errbox" id="errbox"></div>
+    </div>
+
+    <div class="panel" id="detailPanel" style="display:none">
+      <h3>ℹ️ Keterangan</h3>
+      <ul style="color:var(--muted);font-size:13px;line-height:1.7">
+        <li>Tampilan <strong>read-only</strong> — tidak mengubah data absensi.</li>
+        <li>Data diambil dari <code>DATA_URL</code> (JSON).</li>
+        <li>Gunakan <code>?t=</code> di URL data untuk mencegah cache lama.</li>
+        <li>Jika data kosong, lihat log bot (<code>bot.log</code>) dan pastikan <code>BOT_TOKEN</code> valid.</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="foot">
+    <span>Mode: <span id="modeLbl">Rinci</span></span>
+    <span id="footData">DATA_URL: tbd</span>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   DATA SOURCE — ganti dengan URL JSON publik absensi
+   Contoh:
+     https://raw.githubusercontent.com/<user>/<repo>/main/absensi_data.json
+   atau API endpoint: https://<host>/api/absensi
+   ============================================================ */
+const DATA_URL = "";
+
+const STATUS_LABEL = {
+  "Hadir":"🏢 Hadir","Sakit":"🤒 Sakit","Izin":"🕐 Izin",
+  "Lembur":"⏱ Lembur","Lembur Libur":"📅 Lembur libur"
+};
+const STATUS_CLASS = {
+  "Hadir":"hadir","Sakit":"sakit","Izin":"izin",
+  "Lembur":"lembur","Lembur Libur":"lemburlibur"
+};
+
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+
+function fmtDate(iso){
+  if(!iso) return "—";
+  const d = new Date(iso);
+  if(isNaN(d)) return iso;
+  return d.toISOString().slice(0,10);
+}
+function fmtTime(iso){
+  if(!iso) return "—";
+  const d = new Date(iso);
+  if(isNaN(d)) return iso;
+  return d.toTimeString().slice(0,5);
+}
+function fmtDateIndo(iso){
+  const d = new Date(iso+"T00:00:00");
+  if(isNaN(d)) return iso;
+  const days=["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
+  return `${days[d.getDay()]}, ${String(d.getDate()).padStart(2,"0")} ${["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Aug","Sep","Oct","Nov","Des"][d.getMonth()]} ${d.getFullYear()}`;
+}
+
+async function loadData(){
+  const box = $("#errbox"); box.className="errbox";
+  if(!DATA_URL){
+    $("#empty").style.display="block"; $("#tableWrap").style.display="none";
+    $("#footData").textContent="DATA_URL: belum diisi";
+    return;
+  }
+  $("#empty").style.display="none"; $("#tableWrap").style.display="block";
+  $("#footData").textContent="DATA_URL: "+DATA_URL.split("?")[0];
+  try{
+    const r = await fetch(DATA_URL + (DATA_URL.includes("?")?"&":"?") + "t="+Date.now(), {cache:"no-store"});
+    if(!r.ok) throw new Error("HTTP "+r.status);
+    const j = await r.json();
+    render(j);
+  }catch(e){
+    box.classList.add("show");
+    box.textContent = "Gagal memuat data: "+e.message;
+    $("#tableWrap").style.display="none";
+  }
+}
+
+function render(j){
+  const entries = j.entries || [];
+  const updated = j.updated_at || j.updated || "";
+
+  // summary
+  let hadir=0, sakit=0, izin=0, lembur=0, libur=0;
+  for(const e of entries){
+    const s = (e.status||"").trim();
+    if(s==="Hadir") hadir++;
+    else if(s==="Sakit"||s==="Izin") sakit++;
+    else if(s==="Lembur") lembur++;
+    else if(s==="Lembur Libur") libur++;
+  }
+  $("#s_hadir").textContent = hadir;
+  $("#s_sakit").textContent = sakit;
+  $("#s_lembur").textContent = lembur+libur;
+  $("#s_tgl").textContent = fmtDate(updated);
+
+  // filter
+  const filt = $("#fStatus").value;
+  let list = entries.filter(e=>{
+    const s=(e.status||"").trim();
+    return filt==="all" || s===filt;
+  });
+  // sort newest first
+  list.sort((a,b)=> String(b.tanggal||b.id||"").localeCompare(String(a.tanggal||a.id||"")));
+
+  const tbody = $("#tbody");
+  if(!list.length){
+    tbody.innerHTML = "<tr><td colspan='7'>Tidak ada data yang cocok dengan filter.</td></tr>";
+  }else{
+    tbody.innerHTML = list.map(e=>{
+      const s=(e.status||"").trim();
+      return `<tr>
+        <td>${fmtDateIndo(e.tanggal||e.tanggal)}</td>
+        <td>${e.nama||e.user_id||"—"}</td>
+        <td>${e.divisi||"—"}</td>
+        <td>${e.shift||"—"}</td>
+        <td><span class="tag ${STATUS_CLASS[s]||""}">${STATUS_LABEL[s]||s}</span></td>
+        <td>${fmtTime(e.waktu_masuk)}</td>
+        <td>${fmtTime(e.waktu_pulang)}</td>
+      </tr>`;
+    }).join("");
+  }
+
+  $("#freshBadge").textContent = "● Data terbaru: "+fmtDate(updated);
+  $("#freshBadge").className = "badge live";
+  $("#tableMeta").innerHTML = `Menampilkan <strong>${list.length}</strong> entri${entries.length?" (dari "+entries.length+" data total)":"."} <span id="fcount"></span>`;
+
+  // detail panel visibility
+  $("#detailPanel").style.display = list.length?"block":"none";
+}
+
+function toggleMode(){
+  const on = $("#detailPanel").style.display === "none";
+  $("#detailPanel").style.display = on?"block":"none";
+  $("#btnToggle").textContent = on?"📋 Rinci → Ringkas":"◀ Ringkas → Rinci";
+  $("#modeLbl").textContent = on?"Rinci":"Ringkas";
+}
+
+function refresh(){
+  $("#errbox").classList.remove("show");
+  loadData();
+}
+
+$("#btnRefresh").addEventListener("click", refresh);
+$("#btnToggle").addEventListener("click", toggleMode);
+$("#fStatus").addEventListener("change", refresh);
+
+loadData();
+</script>
+</body>
+</html>
